@@ -34,7 +34,7 @@ class LoginForm extends Component {
       canvas.toBlob( blob => {
         let formData = new FormData();
         formData.append('face', blob, 'face.png');
-        axios.post(process.env.REACT_APP_AUTHENTICATION_API_URL, formData, {
+        axios.post('http://127.0.0.1:5000/authenticate', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -49,7 +49,7 @@ class LoginForm extends Component {
           }
         })
         .catch(error => {
-            window.alert('Somehting went wrong, try to use a bigger monitor.');
+            window.alert(error);
         })
       })
     });
@@ -63,7 +63,7 @@ class LoginForm extends Component {
         .then(function (stream) {
           video.srcObject = stream;
         })
-        .catch(function (err0r) {
+        .catch(function (error) {
           console.log("Something went wrong!");
         });
     }
