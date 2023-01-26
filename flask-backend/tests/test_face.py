@@ -18,12 +18,23 @@ class TestFace(unittest.TestCase):
         )
         self.client = self.app.test_client()
 
-    def test_get_request(self):
+    def test_post_request_true(self):
         """This method tests the request status code"""
-        request = self.client.post("/authenticate")
-        print(request.data)
-        print(request.status_code)
+        data={
+            'face':(open('src/assets/images/juan/edu3.png','rb'),'src/assets/images/juan/edu3.png'),
+        }
+        request = self.client.post("/authenticate",data=data,content_type='multipart/form-data')
+
         self.assertTrue(b'True' in request.data)
+        self.assertTrue(request.status_code==200)
+
+    def test_post_request_false(self):
+        """This method tests the request status code and face reconition result"""
+        data={
+            'face':(open('src/assets/images/juan/Gabe.jpg','rb'),'src/assets/images/juan/Gabe.jpg'),
+        }
+        request = self.client.post("/authenticate",data=data,content_type='multipart/form-data')
+        self.assertTrue(b'False' in request.data)
         self.assertTrue(request.status_code==200)
 
 
